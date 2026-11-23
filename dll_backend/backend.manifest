@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+  <assemblyIdentity type="win32" name="MapleMacro.KeyBackend" version="1.0.0.0" processorArchitecture="x86" />
+  <file name="rs01.dll">
+    <comClass clsid="{E4F3D2FA-8FAE-192C-5B82-69F16AA72118}" threadingModel="Both" progid="egs.qdghas" tlbid="{A3D66D3A-BCB4-CA29-B256-DF4198EA2DE9}" />
+  </file>
+  <file name="rs01.tlb"><typelib tlbid="{A3D66D3A-BCB4-CA29-B256-DF4198EA2DE9}" version="1.0" helpdir="" flags="HASDISKIMAGE" /></file>
+</assembly>

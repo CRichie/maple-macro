@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+macro-config.json
+macro-server*.log
+dll_backend/*.dll
+dll_backend/*.tlb

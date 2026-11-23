@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>练级宏配置</title>
+<style>
+:root{font-family:"Microsoft YaHei",system-ui,sans-serif;color:#15243c;background:#f2f5fa}*{box-sizing:border-box}body{margin:0}main{max-width:1050px;margin:auto;padding:40px 24px 70px}.top{display:flex;align-items:start;justify-content:space-between;gap:20px;margin-bottom:28px}.eyebrow{color:#5270a2;font-weight:700;font-size:12px;letter-spacing:.15em}h1{font-size:28px;margin:8px 0}p{color:#66758c;line-height:1.65;margin:5px 0}.status{background:#fff;border:1px solid #dfe6f0;border-radius:12px;padding:12px 16px;font-size:13px;min-width:180px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#99a6b7;margin-right:8px}.running .dot{background:#29aa7a}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{background:#fff;border:1px solid #e1e7ef;border-radius:16px;padding:22px;box-shadow:0 5px 20px #253f6408}.wide{grid-column:1/-1}h2{font-size:17px;margin:0 0 7px}.sub{font-size:13px;margin-bottom:18px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}input{width:100%;border:1px solid #d8e0eb;border-radius:9px;padding:10px 11px;font-size:14px;color:#1c2c43;background:#fbfcfe}input:focus{outline:2px solid #9eb9ed;border-color:#708fd1}.route{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px}button{border:0;border-radius:9px;padding:11px 18px;font-weight:700;cursor:pointer;background:#e7edf7;color:#2b446a}button.primary{background:#355fc5;color:white}button.stop{background:#fff0ef;color:#ad4946}.notice{font-size:13px;color:#66758c}.error{color:#bd3c37}footer{font-size:12px;color:#7b8798;margin-top:20px;line-height:1.7}@media(max-width:720px){main{padding:24px 16px}.top{display:block}.status{margin-top:14px}.grid{grid-template-columns:1fr}.wide{grid-column:auto}.route{grid-template-columns:1fr 1fr}}
+</style></head><body><main>
+<div class="top"><div><div class="eyebrow">LOCAL MACRO SETTINGS</div><h1>练级宏配置</h1><p>设置按键与循环节奏，保存后使用 F8 启动、F9 停止。</p></div><div class="status" id="status"><span class="dot"></span><span id="statusText">正在连接</span></div></div>
+<form id="form"><div class="grid">
+<section class="card"><h2>按键设置</h2><p class="sub">随机动作包括攻击键和附加按键，默认不会按左右方向键。六键区支持 Ins、Del、Home、End、PageUp（PgUp）、PageDown（PgDn）。</p><div class="fields">
+<div class="field"><label for="attack">攻击键</label><input id="attack" required></div><div class="field"><label for="random_keys">随机附加按键</label><input id="random_keys" placeholder="例如 q,w,e"></div><div class="field"><label for="skill1">放置技能 1</label><input id="skill1" required></div><div class="field"><label for="skill2">放置技能 2</label><input id="skill2" required></div></div></section>
+<section class="card"><h2>补放与随机操作</h2><p class="sub">时间单位均为秒。下限不能大于上限。</p><div class="fields">
+<div class="field"><label for="interval_min">补放周期 · 下限</label><input id="interval_min" type="number" min="0.01" step="any" required></div><div class="field"><label for="interval_max">补放周期 · 上限</label><input id="interval_max" type="number" min="0.01" step="any" required></div><div class="field"><label for="action_min">随机动作间隔 · 下限</label><input id="action_min" type="number" min="0.01" step="any" required></div><div class="field"><label for="action_max">随机动作间隔 · 上限</label><input id="action_max" type="number" min="0.01" step="any" required></div></div></section>
+<section class="card wide"><h2>四个光圈</h2><p class="sub">从光圈 1 开始，依次施放技能；每个光圈固定按一次上键传送至下一处，最后回到光圈 1。</p><div class="fields"><div class="field"><label for="skills">各位置技能顺序</label><input id="skills" required><p class="notice">例如 1,2,2,2</p></div><div class="field"><label for="teleport_min">传送等待下限（秒）</label><input id="teleport_min" type="number" min="0.01" step="any" required></div><div class="field"><label for="teleport_max">传送等待上限（秒）</label><input id="teleport_max" type="number" min="0.01" step="any" required></div></div></section>
+<section class="card wide"><h2>按键与技能等待</h2><p class="sub">每次动作都会在设置范围内重新随机取值。</p><div class="fields"><div class="field"><label for="press_min">按键持续下限（秒）</label><input id="press_min" type="number" min="0.01" step="any" required></div><div class="field"><label for="press_max">按键持续上限（秒）</label><input id="press_max" type="number" min="0.01" step="any" required></div><div class="field"><label for="skill_wait_min">技能后等待下限（秒）</label><input id="skill_wait_min" type="number" min="0.01" step="any" required></div><div class="field"><label for="skill_wait_max">技能后等待上限（秒）</label><input id="skill_wait_max" type="number" min="0.01" step="any" required></div></div></section>
+<section class="card wide"><h2>补放间巡回</h2><p class="sub">每轮补放之间随机巡回一次，在光圈 2、3、4 停留后返回光圈 1；停留期间不发送随机动作。</p><div class="fields"><div class="field"><label for="stay_min">每处停留 · 下限（秒）</label><input id="stay_min" type="number" min="0.01" step="any" required></div><div class="field"><label for="stay_max">每处停留 · 上限（秒）</label><input id="stay_max" type="number" min="0.01" step="any" required></div></div></section></div>
+<div class="actions"><button class="primary" type="submit">保存配置</button><button type="button" id="start">保存并启动</button><button class="stop" type="button" id="stop">停止</button><a id="test-link" href="#" style="font-size:14px;color:#355fc5;font-weight:600">打开按键测试页面 ↗</a><span class="notice" id="feedback"></span></div></form>
+<footer>启动后有 3 秒切换到游戏；启动前请站在光圈 1。按键发送到当前焦点窗口，切换窗口前请先停止。<br>程序不识别角色位置或测谎提示音；听到游戏提示音后请按 F9 并手动处理。</footer></main>
+<datalist id="key-options"></datalist>
+<script>
+const keyOptions = ['left','right','up','down','space','shift','ctrl','alt','ins','del','home','end','pgup','pgdn', ...'abcdefghijklmnopqrstuvwxyz', ...'0123456789', ...Array.from({length:12},(_,i)=>`f${i+1}`)];
+const keyList = document.querySelector('#key-options');
+for (const key of keyOptions) { const option=document.createElement('option'); option.value=key; keyList.appendChild(option); }
+for (const id of ['attack','skill1','skill2']) {
+  const field=document.getElementById(id); field.setAttribute('list','key-options'); field.placeholder='输入搜索或选择按键'; field.autocomplete='off';
+}
+for (const id of ['random_keys']) {
+  const field=document.getElementById(id);
+  const picker=document.createElement('input'); picker.setAttribute('list','key-options'); picker.placeholder='搜索按键后点添加'; picker.autocomplete='off'; picker.style.marginTop='8px';
+  const button=document.createElement('button'); button.type='button'; button.textContent='添加按键'; button.style.marginTop='6px'; button.style.padding='7px 10px';
+  button.addEventListener('click',()=>{ const key=picker.value.trim().toLowerCase(); if (!keyOptions.includes(key)) { picker.setCustomValidity('请从列表中选择按键'); picker.reportValidity(); return; } picker.setCustomValidity(''); field.value=[...field.value.split(',').map(v=>v.trim()).filter(Boolean),key].join(','); picker.value=''; });
+  picker.addEventListener('input',()=>picker.setCustomValidity(''));
+  field.insertAdjacentElement('afterend',picker); picker.insertAdjacentElement('afterend',button);
+}
+const token = new URL(location.href).searchParams.get('token');
+document.querySelector('#test-link').href='/test?token='+encodeURIComponent(token);
+const ids=['attack','random_keys','skill1','skill2','interval_min','interval_max','action_min','action_max','teleport_min','teleport_max','press_min','press_max','skill_wait_min','skill_wait_max','stay_min','stay_max','skills'];
+const feedback=document.querySelector('#feedback');
+async function api(path, data){const opts={headers:{'X-Macro-Token':token}};if(data!==undefined){opts.method='POST';opts.headers['Content-Type']='application/json';opts.body=JSON.stringify(data)}const res=await fetch(path,opts);const body=await res.json();if(!res.ok)throw Error(body.error||'请求失败');return body}
+function config(){return Object.fromEntries(ids.map(id=>[id,document.getElementById(id).value]))}
+function inform(text,error=false){feedback.textContent=text;feedback.classList.toggle('error',error)}
+async function refresh(){try{const s=await api('/api/state');document.querySelector('#statusText').textContent=s.message;document.querySelector('#status').classList.toggle('running',s.running);return s}catch(e){document.querySelector('#statusText').textContent='服务已断开';return null}}
+async function save(){if(!document.querySelector('#form').reportValidity())return false;await api('/api/config',config());inform('配置已保存');return true}
+document.querySelector('#form').addEventListener('submit',async e=>{e.preventDefault();try{await save();await refresh()}catch(err){inform(err.message,true)}});
+document.querySelector('#start').onclick=async()=>{try{if(await save()){await api('/api/start',{});inform('已启动，请切换至游戏');await refresh()}}catch(err){inform(err.message,true)}};
+document.querySelector('#stop').onclick=async()=>{try{await api('/api/stop',{});inform('已停止');await refresh()}catch(err){inform(err.message,true)}};
+(async()=>{const s=await refresh();if(s)for(const id of ids)document.getElementById(id).value=s.config[id];setInterval(refresh,1500)})();
+</script></body></html>
